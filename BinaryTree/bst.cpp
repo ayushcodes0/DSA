@@ -34,6 +34,13 @@ Node* insert(Node* root, int val){
     return root;
 }
 
+bool isbalanced(Node* root){
+    if (root == nullptr){
+        return true;
+    }
+    return abs(height(root->left) - height(root->right)) <= 1 && isbalanced(root->left) && isbalanced(root->right);
+}
+
 void inorder(Node* root){
     if(root == nullptr){
         return;
@@ -53,12 +60,15 @@ int main(){
     root = insert(root, 40);
     root = insert(root, 20);
     root = insert(root, 70);
-    root = insert(root, 60);
+    root = insert(root, 80);
+    root = insert(root, 90);
+    root = insert(root, 100);
 
     cout<<"BST Inorder traversal: ";
     inorder(root);
-    cout<<"height: "<<height(root);
+    cout<<"height: "<<height(root)<<endl;
+    cout<<"is balanced: "<<(isbalanced(root) ? "true" : "false")<<endl;
     cout<<endl;
 
-    return 0;
+    return 0; 
 }
