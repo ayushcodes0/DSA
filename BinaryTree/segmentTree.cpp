@@ -45,11 +45,36 @@ int query(Node* node, int l, int r){
 
 }
 
+void update(Node* node, int idx, int val){
+    if(!node || idx<node->start || idx>node->end){
+        return;
+    }
+    if(node->start == node->end){
+        node->sum = val;
+        return;
+    }
+    int mid = (node->start + node->end)/2;
+    if(idx <= mid){
+        update(node->left, idx, val);
+    }
+    else{
+        update(node->right, idx, val);
+    }
+
+    node->sum = node->left->sum + node->right->sum;
+    
+}
+
+
 int main(){
     vector<int> arr = {3,8, 7, 6, -2, -8, 4, 9};
     Node* root = buildTree(arr, 0, arr.size()-1);
 
     cout<< "Sum from idx 2 to 6 is : "<<query(root, 2,6)<<endl;
+
+    update(root, 3, 14); // arr[3] = 14
+
+    cout<< "Sum from idx 2 to 6 is after updating : "<<query(root, 2,6)<<endl;
 
     return 0;
 }
