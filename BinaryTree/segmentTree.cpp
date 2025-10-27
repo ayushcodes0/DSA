@@ -65,6 +65,27 @@ void update(Node* node, int idx, int val){
     
 }
 
+void display(Node* node, string indent = "    ", bool isLeft = true) {
+    if (!node) return;
+
+    // Print right child first (for better visual tree structure)
+    display(node->right, indent + (isLeft ? "│   " : "    "), false);
+
+    // Print current node
+    cout << indent;
+    if (isLeft)
+        cout << "└── ";
+    else
+        cout << "┌── ";
+
+    cout << "[" << node->start << "," << node->end << "]"
+         << " sum=" << node->sum << endl;
+
+    // Print left child
+    display(node->left, indent + (isLeft ? "    " : "│   "), true);
+}
+
+
 
 int main(){
     vector<int> arr = {3,8, 7, 6, -2, -8, 4, 9};
@@ -75,6 +96,8 @@ int main(){
     update(root, 3, 14); // arr[3] = 14
 
     cout<< "Sum from idx 2 to 6 is after updating : "<<query(root, 2,6)<<endl;
+
+    display(root, "        ");
 
     return 0;
 }
